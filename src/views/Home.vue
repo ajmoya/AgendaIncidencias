@@ -30,19 +30,19 @@ import { EventBus } from '@/main';
 
 @Component({ components: { Cabecera, MenuLateral, Principal } })
 export default class Home extends Vue {
- public  mostrarPanel = true;
- public  valoresActuales = ['hola' , 'adios' , 'sioke' , 'dertiron' , 'jajaja' , 'eonoe'];
+  mostrarPanel = false;
+  valoresActuales = ['hola' , 'adios' , 'sioke' , 'dertiron' , 'jajaja' , 'eonoe'];
 
- public  created() {
+  created() {
     console.log('hook created HOME');
   }
 
- public  setVisibilidadPanel(panelVisible: boolean) {
+  setVisibilidadPanel(panelVisible: boolean) {
       this.mostrarPanel = panelVisible;
       console.log('HOME: mostrarPanel: ' + this.mostrarPanel);
   }
 
- public  beforeDestroy() {
+  beforeDestroy() {
     // EventBus.$off('mostrarOcultarPanel');
   }
 }

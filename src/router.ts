@@ -5,31 +5,32 @@ import LoginComponent from './views/Login.vue';
 
 Vue.use(Router);
 
-export default new Router({
+export const router = new Router({
+  // mode: 'history',
   routes: [
-    {
-      path: '/',
-      redirect: {
-          name: 'login',
-      },
-    },
     {
         path: '/login',
         name: 'login',
         component: LoginComponent,
     },
     {
-        path: '/home',
+        path: '/',
         name: 'home',
         component: HomeComponent,
+        meta: { requiresAuth: true },
     },
-    // {
-    //   path: '/about',
-    //   name: 'about',
-    //   // route level code-splitting
-    //   // this generates a separate chunk (about.[hash].js) for this route
-    //   // which is lazy-loaded when the route is visited.
-    //   component: () => import(/* webpackChunkName: "about" */ './views/About.vue'),
-    // },
+    // cualquier otra ruta, se redirige a home
+    { path: '*', redirect: '/' },
   ],
+});
+
+router.beforeEach((to, from, next) => {
+  const logueado = localStorage.getItem('usuario');
+
+  if (to.name === 'login' && logueado) {
+    return next('/');
+  } else if (!logueado && to.matched.some((x) => x.meta.requiresAuth)) {
+      return next({ path: '/login', query: { redirect: to.fullPath }});
+  }
+  next();
 });

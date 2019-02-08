@@ -42,24 +42,25 @@ import { Usuario } from '@/models/usuario';
 export default class Login extends Vue {
 
   // Props
-  @Prop(Object) public errores!: any;
+  @Prop(Object) errores!: any;
 
   // Campos
-  public mostrarPassword = false;
-  public usuario: Usuario = { id: 0, alias  :'', password: ''};
+  mostrarPassword = false;
+  usuario: Usuario = { id: 0, alias  :'', password: ''};
 
   // Métodos
-  public login() {
+  login() {
     // emitimos un evento al padre, que estará suscrito a este evento
     this.$emit('intentarLoguear', this.usuario);
   }
 
   // lifecycle hook
-  public created() {
-    console.log('hook created Login');
+  created() {
+    console.log('hook created LOGIN');
   }
-  public mounted() {
-    console.log('hook mounted Login');
+
+  mounted() {
+    console.log('hook mounted LOGIN');
   }
 }
 </script>

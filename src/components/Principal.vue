@@ -26,6 +26,6 @@ import { Component, Vue, Prop } from 'vue-property-decorator';
 
 @Component
 export default class Principal extends Vue {
-    @Prop(Array) public valores!: object;
+    @Prop(Array) valores!: object;
 }
 </script>

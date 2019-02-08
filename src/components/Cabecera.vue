@@ -10,7 +10,7 @@
       </v-toolbar-title>
       <v-spacer></v-spacer>
       <v-tooltip bottom>
-        <v-btn to="/login" icon large slot="activator" @click="cerrarSesion">
+        <v-btn icon large slot="activator" @click="cerrarSesion">
           <v-icon large>exit_to_app</v-icon>
         </v-btn>
         <span>Salir</span>
@@ -26,20 +26,19 @@ import { ConfigApp } from '@/utils/configApp';
 
 @Component({ components: { } })
 export default class Cabecera extends Vue {
-
- public  iconoMenu = '';
+  iconoMenu = '';
 
   // Props
-  @Prop(Boolean)public  mostrarPanel!: boolean;
+  @Prop(Boolean) mostrarPanel!: boolean;
 
   // Funciones
- public  mostrarOcultarPanel() {
+  mostrarOcultarPanel() {
     // EventBus.$emit('mostrarOcultarPanel', !this.mostrarPanel);
     console.log('emitiendo evento mostrarOcultarPanel');
     this.$emit('mostrarOcultarPanel', !this.mostrarPanel);
   }
 
- public  cerrarSesion() {
+  cerrarSesion() {
     console.log('emitiendo evento cerrarSesion');
     EventBus.$emit('cerrarSesion');
   }

@@ -11,6 +11,7 @@ export function login(usuario: Usuario) {
         // tslint:disable-next-line:no-console
         console.log('El usuario y password son válidos!');
         autenticado = true;
+        localStorage.usuario = JSON.stringify(usuario);
     } else {
         // tslint:disable-next-line:no-console
         console.log('El usuario y/o password son incorrectos');

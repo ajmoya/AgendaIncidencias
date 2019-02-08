@@ -19,36 +19,38 @@ import { EventBus } from '@/main';
 export default class App extends Vue {
 
   // Campos
-  autenticado = false;
   errores = { alias: '', password: '' };
 
   // Métodos
   login(usuario: Usuario) {
     const resultado = api.login(usuario);
-    this.autenticado = resultado.autenticado;
     this.errores = resultado.errores;
 
-    if (this.autenticado) {
-      this.$router.replace({ name  :'home' });
+    if (resultado.autenticado) {
+      this.$router.replace({ name : 'home' });
     }
   }
    
   logout() {
     console.log('recibiendo evento cerrarSesion!');
-    this.autenticado = false;
+    localStorage.removeItem('usuario');
   }
 
   // lifecycle hook
   created() {
-    console.log('hook created App');
-    EventBus.$on('cerrarSesion', () => this.logout());
+    console.log('hook created APP');
+    EventBus.$on('cerrarSesion', () => {
+      this.logout();
+      this.$router.replace({ name : 'login' });
+    });
   }
   
   mounted() {
-    if (!this.autenticado) {
-      console.log('hook mounted App');
-      this.$router.replace({ name  :'login' });
-    }
+      console.log('hook mounted APP');
+  }
+
+  destroy() {
+    localStorage.removeItem('usuario');
   }
 }
 </script>
