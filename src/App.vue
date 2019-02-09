@@ -1,5 +1,5 @@
 <template>
-  <!-- <v-app>    -->
+  <!-- <v-app> -->
     <router-view :errores="errores" @intentarLoguear="login" />
   <!-- </v-app> -->
 </template>

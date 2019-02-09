@@ -1,5 +1,5 @@
 <template>
- <v-app dark>
+ <v-app>
 
     <v-navigation-drawer v-model="mostrarPanel" clipped absolute app>
       <MenuLateral />
