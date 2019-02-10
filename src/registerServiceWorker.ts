@@ -1,7 +1,7 @@
 /* tslint:disable:no-console */
 
-import { register } from 'register-service-worker';
-import { EventBus } from './main';
+// import { register } from 'register-service-worker';
+// import { EventBus } from './main';
 
 // const UpdatedEvent = new CustomEvent('swUpdated', { detail: null });
 
