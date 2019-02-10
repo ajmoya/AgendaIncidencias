@@ -25,7 +25,7 @@
               </v-card-text>
               <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn @click="login">Acceder<v-icon right>check_circle</v-icon></v-btn>
+                <v-btn @click="login">Acceder otro<v-icon right>check_circle</v-icon></v-btn>
               </v-card-actions>
             </v-card>
           </v-flex>

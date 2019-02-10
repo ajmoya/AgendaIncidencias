@@ -1,7 +1,16 @@
 <template>
-  <!-- <v-app> -->
+  <v-app>
     <router-view :errores="errores" @intentarLoguear="login" />
-  <!-- </v-app> -->
+
+  <v-btn color="pink" flat @click="snackbar=true">Actualizar</v-btn>
+
+    <v-container>
+    <v-snackbar v-model="snackbar" vertical bottom :timeout="timeout">
+      A new version of this app is available.
+      <v-btn color="pink" flat @click="recargarApp">Actualizar</v-btn>
+    </v-snackbar>
+    </v-container>
+  </v-app>
 </template>
 
 <script lang="ts">
@@ -20,6 +29,8 @@ export default class App extends Vue {
 
   // Campos
   errores = { alias: '', password: '' };
+  snackbar = false;
+  timeout = 100000;
 
   // Métodos
   login(usuario: Usuario) {
@@ -36,6 +47,11 @@ export default class App extends Vue {
     localStorage.removeItem('usuario');
   }
 
+  recargarApp() {
+    this.snackbar = false;
+    window.location.reload();
+  }
+
   // lifecycle hook
   created() {
     console.log('hook created APP');
@@ -43,10 +59,17 @@ export default class App extends Vue {
       this.logout();
       this.$router.replace({ name : 'login' });
     });
+
+    EventBus.$on('nuevaVersion', () => {
+      console.log('nueva version jajajaja');
+      this.snackbar = true;
+      //window.location.reload();
+    });
   }
   
   mounted() {
-      console.log('hook mounted APP');
+    console.log('hook mounted APP');
+    document.addEventListener('swUpdated', () => this.snackbar=true);
   }
 
   destroy() {
