@@ -2,8 +2,6 @@
   <v-app>
     <router-view :errores="errores" @intentarLoguear="login" />
 
-  <v-btn color="pink" flat @click="snackbar=true">Actualizar</v-btn>
-
     <v-container>
     <v-snackbar v-model="snackbar" vertical bottom :timeout="timeout">
       Se ha actualizado a una nueva versión la app!
@@ -47,9 +45,6 @@ export default class App extends Vue {
     localStorage.removeItem('usuario');
   }
 
-  recargarApp() {
-  }
-
   // lifecycle hook
   created() {
     console.log('hook created APP');
@@ -65,6 +60,7 @@ export default class App extends Vue {
 
     let installPromt: any;
     window.addEventListener('beforeinstallprompt', e => {
+      console.log('entra en el evento beforeinstallprompt APP');
       e.preventDefault();
       installPromt = e;
      // this.snackbar = true;

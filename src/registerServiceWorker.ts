@@ -3,14 +3,6 @@
 import { register } from 'register-service-worker';
 import { EventBus } from './main';
 
-// let newWorker: any;
-
-// // The click event on the notification
-// document.getElementById('reload').addEventListener('click', function() {
-//   newWorker.postMessage({ action: 'skipWaiting' });
-// });
-
-
 if (process.env.NODE_ENV === 'production') {
   register(`${process.env.BASE_URL}service-worker.js`, {
     ready() {
@@ -30,7 +22,6 @@ if (process.env.NODE_ENV === 'production') {
     },
     updated(registration) {
       console.log('New content is available; please refresh.');
-      // notifyUserAboutUpdate(registration.waiting);
       EventBus.$emit('nuevaVersion');
     },
     offline() {
@@ -40,11 +31,4 @@ if (process.env.NODE_ENV === 'production') {
       console.error('Error during service worker registration:', error);
     },
   });
-
-  // let refrescando: boolean;
-  // navigator.serviceWorker.addEventListener('controllerchange', () => {
-  //   if (refrescando) { return; }
-  //   window.location.reload();
-  //   refrescando = false;
-  // });
 }
