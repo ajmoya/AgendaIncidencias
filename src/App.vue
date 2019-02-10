@@ -6,8 +6,8 @@
 
     <v-container>
     <v-snackbar v-model="snackbar" vertical bottom :timeout="timeout">
-      A new version of this app is available.
-      <v-btn color="pink" flat @click="recargarApp">Actualizar</v-btn>
+      Se ha actualizado a una nueva versión la app!
+      <v-btn color="pink" flat @click="snackbar=false">Aceptar</v-btn>
     </v-snackbar>
     </v-container>
   </v-app>
@@ -30,7 +30,7 @@ export default class App extends Vue {
   // Campos
   errores = { alias: '', password: '' };
   snackbar = false;
-  timeout = 100000;
+  timeout = 15000;
 
   // Métodos
   login(usuario: Usuario) {
@@ -41,15 +41,13 @@ export default class App extends Vue {
       this.$router.replace({ name : 'home' });
     }
   }
-   
+
   logout() {
     console.log('recibiendo evento cerrarSesion!');
     localStorage.removeItem('usuario');
   }
 
   recargarApp() {
-    this.snackbar = false;
-    window.location.reload();
   }
 
   // lifecycle hook
@@ -61,18 +59,38 @@ export default class App extends Vue {
     });
 
     EventBus.$on('nuevaVersion', () => {
-      console.log('nueva version jajajaja');
+      console.log('nueva version APP');
       this.snackbar = true;
-      //window.location.reload();
     });
+
+    let installPromt: any;
+    window.addEventListener('beforeinstallprompt', e => {
+      e.preventDefault();
+      installPromt = e;
+     // this.snackbar = true;
+    });
+
+    // this.recargarApp = () => {
+    //   this.snackbar = false;
+    //   installPromt.prompt();
+
+    //   installPromt.userChoice.then((result: any) => {
+    //     if (result.outcome === 'accepted') {
+    //       console.log('Usuario aceptó');
+    //     } else {
+    //       console.log('Usuario denegó');
+    //     }
+    //     installPromt = null;
+    //   })
+    // };
   }
   
   mounted() {
     console.log('hook mounted APP');
-    document.addEventListener('swUpdated', () => this.snackbar=true);
+    //document.addEventListener('swUpdated', () => this.snackbar=true);
   }
 
-  destroy() {
+  beforeDestroy() {
     localStorage.removeItem('usuario');
   }
 }
