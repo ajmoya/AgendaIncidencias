@@ -17,7 +17,7 @@ self.addEventListener('activate', function(event) {
             return Promise.all(
                 cacheNames.map(function(cacheName) {
                     if (cacheWhitelist.indexOf(cacheName) === -1) {
-                        console.log(cacheName + ' => borrando caches antiguas..');
+                        console.log(cacheName + ' => borrando caches antiguas...');
                         return caches.delete(cacheName);
                     }
                 })

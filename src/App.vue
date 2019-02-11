@@ -1,28 +1,24 @@
 <template>
   <v-app>
-
-    <v-container>
     <v-snackbar v-model="snackbarInstalar" top :timeout="timeout">
-      ¿ Desea instalar la app web?
+      ¿Desea instalar la app web?
       <v-btn color="pink" flat @click="instalarApp">Instalar</v-btn>
     </v-snackbar>
-    
+
     <router-view :errores="errores" @intentarLoguear="login" />
 
-    <v-container>
     <v-snackbar v-model="snackbar" vertical bottom :timeout="timeout">
       Versión actual: {{ versionActual }} Se ha encontrado una nueva versión de la app
       <v-btn color="pink" flat @click="recargarApp">Actualizar</v-btn>
     </v-snackbar>
 
-    </v-container>
   </v-app>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import HelloWorld from '@/components/HelloWorld.vue'; // @ is an alias to /src
-import * as api  from '@/services/api';
+import * as api from '@/services/api';
 import { Usuario } from '@/models/usuario';
 import { EventBus } from '@/main';
 import { ConfigApp } from '@/utils/configApp';
@@ -34,14 +30,14 @@ import { ConfigApp } from '@/utils/configApp';
 })
 export default class App extends Vue {
 
-  // Campos
-  errores = { alias: '', password: '' };
-  snackbar = false;
-  snackbarInstalar = false;
-  timeout = 60000;
+ // Campos
+ public errores = { alias: '', password: '' };
+ public snackbar = false;
+ public snackbarInstalar = false;
+ public timeout = 60000;
 
   // Métodos
-  login(usuario: Usuario) {
+ public login(usuario: Usuario) {
     const resultado = api.login(usuario);
     this.errores = resultado.errores;
 
@@ -50,24 +46,24 @@ export default class App extends Vue {
     }
   }
 
-  logout() {
+ public logout() {
     console.log('recibiendo evento cerrarSesion!');
     localStorage.removeItem('usuario');
   }
 
-  recargarApp() {
+ public recargarApp() {
     this.snackbar = false;
     window.location.reload();
   }
 
-  instalarApp() {}
+ public instalarApp() { return; }
 
   get versionActual() {
     return ConfigApp.Version;
   }
 
   // lifecycle hook
-  created() {
+ public created() {
     console.log('hook created APP');
     EventBus.$on('cerrarSesion', () => {
       this.logout();
@@ -80,7 +76,7 @@ export default class App extends Vue {
     });
 
     let installPromt: any;
-    window.addEventListener('beforeinstallprompt', e => {
+    window.addEventListener('beforeinstallprompt', (e) => {
       console.log('entra en el evento beforeinstallprompt APP');
       e.preventDefault();
       installPromt = e;
@@ -98,15 +94,14 @@ export default class App extends Vue {
           console.log('Usuario denegó');
         }
         installPromt = null;
-     })
+     });
    };
-  }
-  
-  mounted() {
+  }
+ public mounted() {
     console.log('hook mounted APP');
   }
 
-  beforeDestroy() {
+  public beforeDestroy() {
     localStorage.removeItem('usuario');
   }
 }
