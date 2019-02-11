@@ -1,6 +1,6 @@
 workbox.core.setCacheNameDetails({
     prefix: 'agendaIncidencias',
-    suffix: 'v0.1',
+    suffix: 'v0.4',
     precache: 'install-time'
   });
 
@@ -10,8 +10,7 @@ workbox.precaching.precacheAndRoute(self.__precacheManifest, {});
 
 
 self.addEventListener('activate', function(event) {
-    let cacheActual = workbox.core.precache.prefix + '-' + workbox.core.cacheNames.precache + '-' + workbox.core.cacheNames.suffix;
-    var cacheWhitelist = [cacheActual];
+    var cacheWhitelist = ['agendaIncidencias-install-time-v0.4'];
 
     event.waitUntil(
         caches.keys().then(function(cacheNames) {
@@ -26,25 +25,6 @@ self.addEventListener('activate', function(event) {
         })
     );
 });
-
-self.addEventListener('activate', function(event) {
-    let cacheActual = workbox.core.precache.prefix + '-' + workbox.core.cacheNames.precache + '-' + workbox.core.cacheNames.suffix;
-    var cacheWhitelist = [cacheActual];
-
-    event.waitUntil(
-        caches.keys().then(function(cacheNames) {
-            return Promise.all(
-                cacheNames.map(function(cacheName) {
-                    if (cacheWhitelist.indexOf(cacheName) === -1) {
-                        console.log(cacheName + ' => borrando caches antiguas..');
-                        return caches.delete(cacheName);
-                    }
-                })
-            );
-        })
-    );
-});
-
 
 workbox.skipWaiting();
 workbox.clientsClaim();

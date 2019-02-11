@@ -2,6 +2,7 @@
 
 import { register } from 'register-service-worker';
 import { EventBus } from './main';
+import { ConfigApp } from '@/utils/configApp';
 
 if (process.env.NODE_ENV === 'production') {
   register(`${process.env.BASE_URL}service-worker.js`, {
@@ -15,14 +16,16 @@ if (process.env.NODE_ENV === 'production') {
       console.log('Service worker has been registered.');
     },
     cached() {
+      // Aquí entra cuando se actualiza solo el service worker
       console.log('Content has been cached for offline use.');
     },
     updatefound(registration) {
       console.log('Nueva versión encontrada. Descargando...');
     },
     updated(registration) {
-      console.log('New content is available; please refresh.');
-      EventBus.$emit('nuevaVersion');
+      // Aquí entra cuando se actualiza contenido de las vistas
+      console.log('El nuevo contenido está disponible. Por favor refresca.');
+      EventBus.$emit('nuevaVersion', ConfigApp.Version);
     },
     offline() {
       console.log('No internet connection found. App is running in offline mode.');

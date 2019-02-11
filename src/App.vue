@@ -4,8 +4,8 @@
 
     <v-container>
     <v-snackbar v-model="snackbar" vertical bottom :timeout="timeout">
-      Se ha actualizado a una nueva versión la app!
-      <v-btn color="pink" flat @click="snackbar=false">Aceptar</v-btn>
+      Se ha encontrado una nueva versión de la app: {{ nuevaVersion }}
+      <v-btn color="pink" flat @click="recargarApp">Actualizar</v-btn>
     </v-snackbar>
     </v-container>
   </v-app>
@@ -29,6 +29,7 @@ export default class App extends Vue {
   errores = { alias: '', password: '' };
   snackbar = false;
   timeout = 15000;
+  nuevaVersion = '';
 
   // Métodos
   login(usuario: Usuario) {
@@ -45,6 +46,11 @@ export default class App extends Vue {
     localStorage.removeItem('usuario');
   }
 
+  recargarApp() {
+    this.snackbar = false;
+    window.location.reload();
+  }
+
   // lifecycle hook
   created() {
     console.log('hook created APP');
@@ -53,8 +59,9 @@ export default class App extends Vue {
       this.$router.replace({ name : 'login' });
     });
 
-    EventBus.$on('nuevaVersion', () => {
-      console.log('nueva version APP');
+    EventBus.$on('nuevaVersion', (nuevaVersion: string) => {
+      console.log('nueva version APP:' + nuevaVersion);
+      this.nuevaVersion = nuevaVersion;
       this.snackbar = true;
     });
 
@@ -63,27 +70,27 @@ export default class App extends Vue {
       console.log('entra en el evento beforeinstallprompt APP');
       e.preventDefault();
       installPromt = e;
-     // this.snackbar = true;
     });
 
-    // this.recargarApp = () => {
-    //   this.snackbar = false;
-    //   installPromt.prompt();
+    //this.recargarApp = () => {
+     // this.snackbar = false;
+     // window.location.reload();
 
-    //   installPromt.userChoice.then((result: any) => {
-    //     if (result.outcome === 'accepted') {
-    //       console.log('Usuario aceptó');
-    //     } else {
-    //       console.log('Usuario denegó');
-    //     }
-    //     installPromt = null;
-    //   })
-    // };
+      /*installPromt.prompt();
+
+      installPromt.userChoice.then((result: any) => {
+        if (result.outcome === 'accepted') {
+          console.log('Usuario aceptó');
+        } else {
+          console.log('Usuario denegó');
+        }
+        installPromt = null;*/
+     // })
+   // };
   }
   
   mounted() {
     console.log('hook mounted APP');
-    //document.addEventListener('swUpdated', () => this.snackbar=true);
   }
 
   beforeDestroy() {
