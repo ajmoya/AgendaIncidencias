@@ -10,3 +10,4 @@ git commit -m 'deploy'
 
 :: si estás desplegando a GitHub Pages: https://<USERNAME>.github.io/<REPO>
 git push -f https://github.com/ajmoya/agendaIncidencias.git master:gh-pages
+

@@ -2,10 +2,10 @@
      <v-app>
       <v-container fluid fill-height>
         <v-layout align-center justify-center>
-          <v-flex>  <!-- xs12 sm8 md4 -->
+          <v-flex xs12 sm8 md4>
             <v-card class="elevation-12">
               <v-toolbar>
-                <v-toolbar-title>Acceso Agenda</v-toolbar-title>
+                <v-toolbar-title>Acceso Agenda v{{ versionActual }}</v-toolbar-title>
                 <v-spacer></v-spacer>
                 <v-tooltip bottom>
                   <v-btn icon large slot="activator">
@@ -37,6 +37,7 @@
 <script lang="ts">
 import { Component, Vue, Prop } from 'vue-property-decorator';
 import { Usuario } from '@/models/usuario';
+import { ConfigApp } from '@/utils/configApp';
 
 @Component
 export default class Login extends Vue {
@@ -52,6 +53,10 @@ export default class Login extends Vue {
   login() {
     // emitimos un evento al padre, que estará suscrito a este evento
     this.$emit('intentarLoguear', this.usuario);
+  }
+
+  get versionActual() {
+    return ConfigApp.Version;
   }
 
   // lifecycle hook

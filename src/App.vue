@@ -1,12 +1,20 @@
 <template>
   <v-app>
+
+    <v-container>
+    <v-snackbar v-model="snackbarInstalar" top :timeout="timeout">
+      ¿ Desea instalar la app web?
+      <v-btn color="pink" flat @click="instalarApp">Instalar</v-btn>
+    </v-snackbar>
+    
     <router-view :errores="errores" @intentarLoguear="login" />
 
     <v-container>
     <v-snackbar v-model="snackbar" vertical bottom :timeout="timeout">
-      Se ha encontrado una nueva versión de la app: {{ nuevaVersion }}
+      Versión actual: {{ versionActual }} Se ha encontrado una nueva versión de la app
       <v-btn color="pink" flat @click="recargarApp">Actualizar</v-btn>
     </v-snackbar>
+
     </v-container>
   </v-app>
 </template>
@@ -17,6 +25,7 @@ import HelloWorld from '@/components/HelloWorld.vue'; // @ is an alias to /src
 import * as api  from '@/services/api';
 import { Usuario } from '@/models/usuario';
 import { EventBus } from '@/main';
+import { ConfigApp } from '@/utils/configApp';
 
 @Component({
   name: 'App',
@@ -28,8 +37,8 @@ export default class App extends Vue {
   // Campos
   errores = { alias: '', password: '' };
   snackbar = false;
-  timeout = 15000;
-  nuevaVersion = '';
+  snackbarInstalar = false;
+  timeout = 60000;
 
   // Métodos
   login(usuario: Usuario) {
@@ -51,6 +60,12 @@ export default class App extends Vue {
     window.location.reload();
   }
 
+  instalarApp() {}
+
+  get versionActual() {
+    return ConfigApp.Version;
+  }
+
   // lifecycle hook
   created() {
     console.log('hook created APP');
@@ -59,9 +74,8 @@ export default class App extends Vue {
       this.$router.replace({ name : 'login' });
     });
 
-    EventBus.$on('nuevaVersion', (nuevaVersion: string) => {
-      console.log('nueva version APP:' + nuevaVersion);
-      this.nuevaVersion = nuevaVersion;
+    EventBus.$on('nuevaVersion', () => {
+      console.log('versión actual APP:' + this.versionActual);
       this.snackbar = true;
     });
 
@@ -70,13 +84,12 @@ export default class App extends Vue {
       console.log('entra en el evento beforeinstallprompt APP');
       e.preventDefault();
       installPromt = e;
+      this.snackbarInstalar = true;
     });
 
-    //this.recargarApp = () => {
-     // this.snackbar = false;
-     // window.location.reload();
-
-      /*installPromt.prompt();
+    this.instalarApp = () => {
+      this.snackbarInstalar = false;
+      installPromt.prompt();
 
       installPromt.userChoice.then((result: any) => {
         if (result.outcome === 'accepted') {
@@ -84,9 +97,9 @@ export default class App extends Vue {
         } else {
           console.log('Usuario denegó');
         }
-        installPromt = null;*/
-     // })
-   // };
+        installPromt = null;
+     })
+   };
   }
   
   mounted() {
