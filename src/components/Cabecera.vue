@@ -26,7 +26,6 @@ import { ConfigApp } from '@/utils/configApp';
 
 @Component({ components: { } })
 export default class Cabecera extends Vue {
-  public iconoMenu = '';
 
   // Props
   @Prop(Boolean) public mostrarPanel!: boolean;
