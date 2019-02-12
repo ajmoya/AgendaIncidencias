@@ -15,10 +15,5 @@ export default class Titulo extends Vue {
 
   // Props
   @Prop(Boolean) public mostrarIcono!: boolean;
-
-  // Computadas
-  get getIcono() {
-    return this.mostrarIcono ? 'phone' : '';
-  }
 }
 </script>
