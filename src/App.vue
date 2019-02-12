@@ -17,8 +17,7 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import HelloWorld from '@/components/HelloWorld.vue'; // @ is an alias to /src
-import * as api from '@/services/api';
+import * as api from '@/services/api'; // @ is an alias to /src
 import { Usuario } from '@/models/usuario';
 import { EventBus } from '@/main';
 import { ConfigApp } from '@/utils/configApp';
@@ -37,7 +36,7 @@ export default class App extends Vue {
  public timeout = 60000;
 
   // Métodos
- public login(usuario: Usuario) {
+  public login(usuario: Usuario) {
     const resultado = api.login(usuario);
     this.errores = resultado.errores;
 
@@ -46,24 +45,24 @@ export default class App extends Vue {
     }
   }
 
- public logout() {
+  public logout() {
     console.log('recibiendo evento cerrarSesion!');
     localStorage.removeItem('usuario');
   }
 
- public recargarApp() {
+  public recargarApp() {
     this.snackbar = false;
     window.location.reload();
   }
 
- public instalarApp() { return; }
+  public instalarApp() { return; }
 
   get versionActual() {
     return ConfigApp.Version;
   }
 
   // lifecycle hook
- public created() {
+  public created() {
     console.log('hook created APP');
     EventBus.$on('cerrarSesion', () => {
       this.logout();
@@ -96,8 +95,9 @@ export default class App extends Vue {
         installPromt = null;
      });
    };
-  }
- public mounted() {
+  }
+
+  public mounted() {
     console.log('hook mounted APP');
   }
 

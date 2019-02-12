@@ -1,5 +1,7 @@
 export interface Opcion {
     id: number;
-    alias: string;
-    password: string;
+    nivel: number;
+    nombre: string;
+    hoja: boolean;
+    padre: number;
 }
