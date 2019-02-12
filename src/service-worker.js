@@ -1,6 +1,6 @@
 workbox.core.setCacheNameDetails({
     prefix: 'agendaIncidencias',
-    suffix: 'v0.1',
+    suffix: 'v0.2',
     precache: 'install-time'
   });
 
@@ -10,7 +10,7 @@ workbox.precaching.precacheAndRoute(self.__precacheManifest, {});
 
 
 self.addEventListener('activate', function(event) {
-    var cacheWhitelist = ['agendaIncidencias-install-time-v0.1'];
+    var cacheWhitelist = ['agendaIncidencias-install-time-v0.2'];
 
     event.waitUntil(
         caches.keys().then(function(cacheNames) {

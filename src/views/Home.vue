@@ -63,7 +63,7 @@ export default class Home extends Vue {
   ];
 
   public componentesHijos = ['lista-opciones', 'resultado', 'datos-contacto'];
-  public componenteActual = 0;
+  public componenteActual = 2;
 
 
   public created() {
